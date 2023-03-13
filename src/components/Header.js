@@ -36,12 +36,12 @@ function Header() {
                     <>
                         <li>
                             <Link to='/login'>
-                                <FaSignInAlt />Login
+                                <FaSignInAlt /> Login
                             </Link>
                         </li>
                         <li>
                             <Link to='/login'>
-                                <FaUser />Register
+                                <FaUser /> Register
                             </Link>
                         </li>
                     </>

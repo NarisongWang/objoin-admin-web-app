@@ -34,9 +34,14 @@ const Login = () => {
             [e.target.id]: e.target.value,
         }))
     }
+
     const onSubmit = (e) =>{
         e.preventDefault()
-        dispatch(login(formData))
+        const userData = {
+            email,
+            password
+        }
+        dispatch(login(userData))
     }
 
     if (isLoading) {
