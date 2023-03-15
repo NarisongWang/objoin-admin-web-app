@@ -106,9 +106,77 @@ h3 {
   height: 40px;
 }
 
+.btn-sm {
+  padding: 5px 15px;
+  font-size: 13px;
+  height: 40px;
+}
+
+.btn-grey {
+  padding: 5px 15px;
+  font-size: 13px;
+  background: grey;
+  border: none;
+  height: 40px;
+}
+
 .flex-row {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 0px;
+}
+
+.link {
+  color: blue;
+  text-decoration: underline;
+}
+
+/*work-status
+0: waiting for setup
+1: waiting for delivery
+2: waiting for installation
+3: installation in progress
+4: installation completed
+5: installation order closed
+*/
+
+.status {
+  background-color: #333;
+  color: #fff;
+  width: 120px;
+  padding: 0 20px;
+  justify-self: center;
+  border-radius: 10px;
+  font-size: 14px;
+  text-align: center;
+  border-radius: 10px;
+  margin-right: 15px;
+  width: 175px;
+  height: 50px;
+  padding: 15px 0;
+}
+
+.status-0 {
+  background-color: grey;
+}
+
+.status-1 {
+  background-color: darkred;
+}
+
+.status-2 {
+  background-color: #20babd;
+}
+
+.status-3 {
+  background-color: lightgreen;
+}
+
+.status-4 {
+  background-color: green;
+}
+
+.status-5 {
+  background-color: darkslategray;
 }

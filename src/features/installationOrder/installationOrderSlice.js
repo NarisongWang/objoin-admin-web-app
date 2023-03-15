@@ -8,7 +8,7 @@ const initialState = {
     users: [],
     files: [],
     isLoading: false,
-    error: ''
+    error: '',
 }
 
 export const getInstallationOrders = createAsyncThunk(

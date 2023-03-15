@@ -28,7 +28,7 @@ const getConfig = (token) =>{
 
 const installationOrderAPI = {
     getInstallationOrders,
-    getTotalCount
+    getTotalCount,
 }
 
 export default installationOrderAPI

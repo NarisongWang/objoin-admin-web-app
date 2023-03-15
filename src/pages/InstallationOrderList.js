@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import { getInstallationOrders, getTotalCount } from '../features/installationOrder/installationOrderSlice'
 import { toast } from 'react-toastify'
 import BackButton from '../components/BackButton'
@@ -10,8 +11,9 @@ import styles from './InstallationOrderList.module.css'
 
 const InstallationOrderList = () => {
     const pageSize = 10
-    const [ searchText, setSearchText ] = useState('')
-    const [ currentPage, setCurrentPage ] = useState(1)
+    const { paramPage, paramText } = useParams()
+    const [ currentPage, setCurrentPage ] = useState(paramPage?parseInt(paramPage):1)
+    const [ searchText, setSearchText ] = useState(paramText?paramText:'')
 
     const { installationOrders, totalCount, isLoading, error }  = useSelector(
         (state) => state.installationOrder
@@ -19,9 +21,11 @@ const InstallationOrderList = () => {
     const dispatch = useDispatch()
 
     useEffect(()=>{
-        dispatch(getInstallationOrders({ firstPageIndex:0, pageSize:pageSize, searchText:'' }))
-        dispatch(getTotalCount({searchText:''}))
-    },[dispatch])
+        const firstPageIndex = (currentPage - 1) * pageSize
+        dispatch(getInstallationOrders({ firstPageIndex, pageSize, searchText }))
+        dispatch(getTotalCount({searchText}))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
 
     useEffect(()=>{
         if(error!==''){
@@ -29,10 +33,25 @@ const InstallationOrderList = () => {
         }
     },[error])
 
-    useEffect(()=>{
-        const firstPageIndex = (currentPage - 1) * pageSize;
+    const onPageChange = (page) =>{
+        setCurrentPage(page)
+        const firstPageIndex = (page - 1) * pageSize
         dispatch(getInstallationOrders({ firstPageIndex, pageSize, searchText }))
-    },[currentPage, dispatch])
+    }
+
+    const search = () =>{
+        setCurrentPage(1)
+        dispatch(getInstallationOrders({ firstPageIndex:0, pageSize, searchText }))
+        dispatch(getTotalCount({searchText}))
+    }
+
+    const clearSearch = () =>{
+        setSearchText('')
+        setCurrentPage(1)
+        dispatch(getInstallationOrders({ firstPageIndex:0, pageSize, searchText:'' }))
+        dispatch(getTotalCount({searchText:''}))
+    }
+
 
     if (isLoading) {
         return <Spinner />
@@ -45,14 +64,14 @@ const InstallationOrderList = () => {
                 <h1>Installation Orders</h1>
                 <div>&nbsp;</div>
             </div>
-            
+
             <div style={{marginBottom:"10px"}}>
                 <input 
                     value={searchText}
                     onChange={(e) => setSearchText(e.target.value)}
                     placeholder='Installation Order Number'></input>
-                <button onClick={()=>{}} style={{marginLeft:"10px",width:"80px"}}>Search</button>
-                <button onClick={()=>{}} style={{marginLeft:"10px",width:"80px"}}>Clear</button>
+                <button onClick={()=>{search()}} style={{marginLeft:"10px",width:"80px"}}>Search</button>
+                <button onClick={()=>{clearSearch()}} style={{marginLeft:"10px",width:"80px"}}>Clear</button>
             </div>
 
             <div className={styles.headings}>
@@ -62,19 +81,19 @@ const InstallationOrderList = () => {
                 <div>Ship Name</div>
                 <div>Ship Address</div>
                 <div>Due Date</div>
-                <div>Details</div>
+                <div></div>
             </div>
-
+         
             {installationOrders.map((installationOrder) => {
-                return <InstallationOrderItem key={installationOrder._id} installationOrder={installationOrder} />
-            })}
-
+                return <InstallationOrderItem key={installationOrder._id} installationOrder={installationOrder} currentPage={currentPage} searchText={searchText}/>
+            })} 
+            
             <Pagination
                 className="pagination-bar"
                 currentPage={currentPage}
                 totalCount={totalCount}
                 pageSize={pageSize}
-                onPageChange={page => setCurrentPage(page)}
+                onPageChange={page => onPageChange(page)}
             />
         </>
     )

@@ -9,7 +9,10 @@ import PageNotFound from './pages/PageNotFound'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import InstallationOrderList from './pages/InstallationOrderList'
+import InstallationOrderDetail from './pages/InstallationOrderDetail'
+// eslint-disable-next-line
 import InstallationReport from './pages/InstallationReport'
+import TestPage from './pages/TestPage'
 import './App.css'
 
 const BasicLayout = () =>{
@@ -44,12 +47,13 @@ const App = () =>{
           <Route path='/' element={<PrivateRoute />}>
             <Route path='/' element={<BasicLayout />} >
                 <Route index element={<Home />} />
-                <Route path='/installation-orders' element={<InstallationOrderList />} />
+                <Route path='/installation-orders/:paramPage?/:paramText?' element={<InstallationOrderList />} />
+                <Route path='/installation-order/:installationOrderId/:paramPage/:paramText?' element={<InstallationOrderDetail />} />
                 <Route path='/*' element={<PageNotFound />} />
             </Route>
             {/* LayoutWithoutHeader with PrivateRoute */}
             <Route path='/test' element={<LayoutWithoutHeader />} >
-              <Route index element={<InstallationReport />} />
+              <Route index element={<TestPage />} />
             </Route>
           </Route>
         </Routes>
