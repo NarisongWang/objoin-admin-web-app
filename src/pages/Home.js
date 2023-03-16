@@ -9,10 +9,10 @@ const Home = () => {
         <h1> Installation Order Management</h1>
         <br />
         <Link to='/installation-orders' className='btn btn-menu'>
-            <FaListAlt />&nbsp; Installation Order List
+            <FaListAlt />&nbsp; Manage Installation Orders
         </Link>
-        <Link to='/load-installation-orders' className='btn btn-menu'>
-            <FaStaylinked />&nbsp; Load Installation Orders
+        <Link to='/sales-orders' className='btn btn-menu'>
+            <FaStaylinked />&nbsp; Load Sales Orders
         </Link>
         <Link to='/manage-employees' className='btn btn-menu'>
             <FaPeopleArrows />&nbsp; Manage Employees

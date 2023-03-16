@@ -1,0 +1,38 @@
+.orderItems {
+    display: grid;
+    grid-template-columns: 30px 50px 100px 150px 150px 200px 100px;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    background: #f4f4f4;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.loaded {
+    background-color: #333;
+    color: #fff;
+    width: 120px;
+    padding: 0 20px;
+    justify-self: center;
+    border-radius: 10px;
+    font-size: 14px;
+    text-align: center;
+    background-color: green;
+    margin-right: 10px;
+}
+
+.notLoaded {
+    background-color: #333;
+    color: #fff;
+    width: 120px;
+    padding: 0 20px;
+    justify-self: center;
+    border-radius: 10px;
+    font-size: 14px;
+    text-align: center;
+    background-color: grey;
+    margin-right: 10px;
+}

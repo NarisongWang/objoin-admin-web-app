@@ -10,8 +10,11 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import InstallationOrderList from './pages/InstallationOrderList'
 import InstallationOrderDetail from './pages/InstallationOrderDetail'
+import SalesOrderList from './pages/SalesOrderList'
+
 // eslint-disable-next-line
 import InstallationReport from './pages/InstallationReport'
+import DisplayPhoto from './pages/DisplayPhoto'
 import TestPage from './pages/TestPage'
 import './App.css'
 
@@ -49,6 +52,9 @@ const App = () =>{
                 <Route index element={<Home />} />
                 <Route path='/installation-orders/:paramPage?/:paramText?' element={<InstallationOrderList />} />
                 <Route path='/installation-order/:installationOrderId/:paramPage/:paramText?' element={<InstallationOrderDetail />} />
+                <Route path='/sales-orders/:paramPage?/:paramText?' element={<SalesOrderList />} />
+                
+                <Route path='/display-photo/:photoUrl' element={<DisplayPhoto />} />
                 <Route path='/*' element={<PageNotFound />} />
             </Route>
             {/* LayoutWithoutHeader with PrivateRoute */}

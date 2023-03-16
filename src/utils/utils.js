@@ -14,3 +14,12 @@ export const parseDate = (strDate) =>{
     date =  dd + "-" + mm + "-" + yyyy
     return date.toString()
 }
+
+export const getConfig = (token) =>{
+    const config = {
+        headers:{
+            Authorization: `Bearer ${token}`
+        }
+    }
+    return config
+}

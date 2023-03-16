@@ -19,13 +19,13 @@ export const login = createAsyncThunk(
         try {
             const data = await authAPI.login(user)
             if(data){
-                // save user and dictionary info in browser localStorage 
+                // save user and dictionary info in browser localStorage
                 localStorage.setItem('user', JSON.stringify(data.user))
                 localStorage.setItem('dictionary', JSON.stringify(data.dictionary))
             }
             return data
         } catch (err) {
-            const message = (err.response && err.response.data && err.response.data.message) 
+            const message = (err.response && err.response.data && err.response.data.message)
                             || err.message || err.toString()
             return thunkAPI.rejectWithValue(message)
         }

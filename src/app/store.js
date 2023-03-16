@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authReducer from '../features/auth/authSlice'
-import installationOrderReducere from '../features/installationOrder/installationOrderSlice'
+import installationOrderReducer from '../features/installationOrder/installationOrderSlice'
+import salesOrderReducer from '../features/salesOrder/salesOrderSlice'
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    installationOrder: installationOrderReducere,
+    installationOrder: installationOrderReducer,
+    salesOrder: salesOrderReducer,
   }
 })
