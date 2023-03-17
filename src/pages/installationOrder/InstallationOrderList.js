@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { getInstallationOrders, getTotalCount } from '../features/installationOrder/installationOrderSlice'
+import { getInstallationOrders, getTotalCount } from '../../features/installationOrder/installationOrderSlice'
 import { toast } from 'react-toastify'
-import BackButton from '../components/BackButton'
-import InstallationOrderItem from '../components/InstallationOrderItem'
-import Spinner from '../components/Spinner'
-import Pagination from '../components/Pagination'
+import BackButton from '../../components/BackButton'
+import InstallationOrderItem from '../../components/InstallationOrderItem'
+import Spinner from '../../components/Spinner'
+import Pagination from '../../components/Pagination'
 import styles from './InstallationOrderList.module.css'
 
 const InstallationOrderList = () => {

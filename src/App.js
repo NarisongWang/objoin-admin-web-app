@@ -5,17 +5,14 @@ import 'react-toastify/dist/ReactToastify.css'
 import PrivateRoute from './components/PrivateRoute'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import PageNotFound from './pages/PageNotFound'
-import Home from './pages/Home'
-import Login from './pages/Login'
-import InstallationOrderList from './pages/InstallationOrderList'
-import InstallationOrderDetail from './pages/InstallationOrderDetail'
-import SalesOrderList from './pages/SalesOrderList'
-
-// eslint-disable-next-line
-import InstallationReport from './pages/InstallationReport'
-import DisplayPhoto from './pages/DisplayPhoto'
-import TestPage from './pages/TestPage'
+import PageNotFound from './pages/home/PageNotFound'
+import Home from './pages/home/Home'
+import Login from './pages/auth/Login'
+import InstallationOrderList from './pages/installationOrder/InstallationOrderList'
+import InstallationOrderDetail from './pages/installationOrder/InstallationOrderDetail'
+import SalesOrderList from './pages/salesOrder/SalesOrderList'
+import InstallationOrderReport from './pages/installationOrder/InstallationOrderReport'
+import DisplayPhoto from './pages/home/DisplayPhoto'
 import './App.css'
 
 const BasicLayout = () =>{
@@ -57,9 +54,9 @@ const App = () =>{
                 <Route path='/display-photo/:photoUrl' element={<DisplayPhoto />} />
                 <Route path='/*' element={<PageNotFound />} />
             </Route>
-            {/* LayoutWithoutHeader with PrivateRoute */}
-            <Route path='/test' element={<LayoutWithoutHeader />} >
-              <Route index element={<TestPage />} />
+            {/* LayoutWithoutHeader & PrivateRoute */}
+            <Route path='/installation-report' element={<LayoutWithoutHeader />} >
+              <Route index element={<InstallationOrderReport />} />
             </Route>
           </Route>
         </Routes>

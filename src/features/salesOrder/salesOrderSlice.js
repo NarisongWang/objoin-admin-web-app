@@ -78,6 +78,7 @@ export const salesOrderSlice = createSlice({
             .addCase(getSalesOrders.pending,(state)=>{
                 state.isLoading = true
                 state.error = ''
+                state.salesOrders = []
             })
             .addCase(getSalesOrders.fulfilled, (state, action) =>{
                 state.isLoading = false

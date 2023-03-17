@@ -1,6 +1,6 @@
 import React from 'react'
 
-const InstallationReport = () => {
+const InstallationOrderReport = () => {
   return (
     <div>
       This is installation report page wich is not wrapped by header.
@@ -8,4 +8,4 @@ const InstallationReport = () => {
   )
 }
 
-export default InstallationReport
+export default InstallationOrderReport
