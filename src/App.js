@@ -10,8 +10,9 @@ import Home from './pages/home/Home'
 import Login from './pages/auth/Login'
 import InstallationOrderList from './pages/installationOrder/InstallationOrderList'
 import InstallationOrderDetail from './pages/installationOrder/InstallationOrderDetail'
-import SalesOrderList from './pages/salesOrder/SalesOrderList'
+import InstallationOrderSetup from './pages/installationOrder/InstallationOrderSetup'
 import InstallationOrderReport from './pages/installationOrder/InstallationOrderReport'
+import SalesOrderList from './pages/salesOrder/SalesOrderList'
 import DisplayPhoto from './pages/home/DisplayPhoto'
 import './App.css'
 
@@ -49,6 +50,7 @@ const App = () =>{
                 <Route index element={<Home />} />
                 <Route path='/installation-orders/:paramPage?/:paramText?' element={<InstallationOrderList />} />
                 <Route path='/installation-order/:installationOrderId/:paramPage/:paramText?' element={<InstallationOrderDetail />} />
+                <Route path='/installation-order-setup/:installationOrderId/:paramPage/:paramText?' element={<InstallationOrderSetup />} />
                 <Route path='/sales-orders/:paramPage?/:paramText?' element={<SalesOrderList />} />
                 
                 <Route path='/display-photo/:photoUrl' element={<DisplayPhoto />} />

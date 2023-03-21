@@ -4,13 +4,14 @@ import { parseDate } from '../utils/utils'
 import styles from './SalesOrderItem.module.css'
 
 const SalesOrderItem = ({ index, salesOrder, select, setSelect }) => {
-
-
+    const checkSelection = () => {
+        
+    }
     return (
         <div className={styles.orderItems}>
             {salesOrder.loaded?
                 (<input type='checkbox' checked={true} disabled></input>):
-                (<input type='checkbox' checked={false}></input>)
+                (<input type='checkbox' checked={false} onChange={checkSelection}></input>)
             }
             <Link to={`/load-installation-orders/${salesOrder.ID}`} className='link'>
                 {salesOrder.installationOrderNumber}

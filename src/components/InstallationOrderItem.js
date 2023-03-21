@@ -24,7 +24,7 @@ const InstallationOrderItem = ({ installationOrder, currentPage, searchText }) =
             <div>{installationOrder.shipAddress}</div>
             <div>{date}</div>
             {installationOrder.workStatus===0? (
-                <Link to={`/setup-installation-order/${installationOrder._id}`} className='btn btn-sm'>
+                <Link to={`/installation-order-setup/${installationOrder._id}/${currentPage}/${searchText}`} className='btn btn-sm'>
                     Set Up
                 </Link>
             ):
