@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { getInstallationOrder } from '../../features/installationOrder/installationOrderSlice'
+import { getInstallationOrder, setupInstallationOrder, editInstallationOrder } from '../../features/installationOrder/installationOrderSlice'
 import { parseDate } from '../../utils/utils'
 import Spinner from '../../components/Spinner'
 import BackButton from '../../components/BackButton'
@@ -10,12 +10,11 @@ import PdfSelectContainer from '../../components/PdfSelectContainer'
 import styles from './InstallationOrderSetup.module.css'
 
 const InstallationOrderSetup = () => {
-    const { installationOrderId, paramPage, paramText } = useParams()
+    const { installationOrderId, paramType, paramPage, paramText } = useParams()
 
     const [installers, setInstallers] = useState([])
     const [deliverers, setDeliverers] = useState([])
     const [selectedFiles, setSelectedFiles] = useState([])
-    const [directories, setDirectories] = useState([])
     
     const { dictionary } = useSelector(
         (state)=>state.auth
@@ -57,12 +56,124 @@ const InstallationOrderSetup = () => {
             toast.warning('Please select at least one installer')
             return
         }
+
+        const installationOrderId = installationOrder._id
+        const installationOrderNumber = installationOrder.installationOrderNumber
+        let fileUrl = []
+        for (let i = 0; i < selectedFiles.length; i++) {
+            let url = selectedFiles[i].replaceAll('\\','/');
+            url = url.substring(url.indexOf(installationOrderNumber),url.length);
+            fileUrl.push(url)
+        }
+        const localFilePath = selectedFiles[0].substring(0,selectedFiles[0].indexOf(installationOrderNumber))
+        const newTimeFrame = {workStatus:installationOrder.workStatus+1, time:new Date()}
+        const timeFrames = [...installationOrder.timeFrames,newTimeFrame]
+        if (paramType === 'setup') {
+            dispatch(setupInstallationOrder({
+                installationOrderId,
+                update:{
+                    workStatus:installationOrder.workStatus+1,
+                    deliverers,
+                    installers,
+                    timeFrames,
+                    files:fileUrl,
+                    localFilePath
+                }
+            })).unwrap().then(()=>{
+                navigate(`/installation-orders/${paramPage}/${paramText?paramText:''}`)
+                toast.success('Installation Order Setup Success!')
+            }).catch(toast.error)
+        } else {
+            dispatch(editInstallationOrder({
+                installationOrderId,
+                update:{
+                    deliverers,
+                    installers,
+                    files:fileUrl,
+                    localFilePath
+                }
+            })).unwrap().then(()=>{
+                navigate(`/installation-order/${installationOrderId}/${paramPage}/${paramText?paramText:''}`)
+                toast.success('Installation Order Edit Success!')
+            }).catch(toast.error)
+        }
     }
 
-    const addDeliverer = (e) =>{}
-    const removeDeliverer = (e) =>{}
-    const addInstaller = (e) =>{}
-    const removeInstaller = (e) =>{}
+    const addDeliverer = (e) =>{
+        e.preventDefault()
+        const id = selectRef4.current.value
+        if(id===''){ return }
+        if (deliverers.length === 1) {
+            toast.warning('You can only choose one deliverer!')
+            return
+        }
+        var fullName
+        for (let i = 0; i < selectRef4.current.length; i++) {
+            if(selectRef4.current.options[i].value === selectRef4.current.value){
+                fullName = selectRef4.current.options[i].text
+                selectRef3.current.add(selectRef4.current.options[i])
+            }
+        }
+        const new_deliverers = [...deliverers, {fullName:fullName, id:id}]
+        setDeliverers(new_deliverers)
+    }
+
+    const removeDeliverer = (e) =>{
+        e.preventDefault()
+        const id = selectRef3.current.value
+        if(id===''){ return }
+        for (let i = 0; i < selectRef3.current.length; i++) {
+            if(selectRef3.current.options[i].value === selectRef3.current.value){
+                selectRef4.current.add(selectRef3.current.options[i])
+            }
+        }
+
+        const new_deliverers = [...deliverers]
+        for (let i = 0; i < new_deliverers.length; i++) {
+            if(id === new_deliverers[i].id){
+                new_deliverers.splice(i, 1)
+            }
+        }
+        setDeliverers(new_deliverers)
+    }
+
+    const addInstaller = (e) =>{
+        e.preventDefault()
+        const id = selectRef2.current.value
+        if(id===''){ return }
+        if (installers.length === 1) {
+            toast.warning('You can only choose one installer!')
+            return
+        }
+        var fullName
+        for (let i = 0; i < selectRef2.current.length; i++) {
+            if(selectRef2.current.options[i].value === selectRef2.current.value){
+                fullName = selectRef2.current.options[i].text
+                selectRef1.current.add(selectRef2.current.options[i])
+            }
+        }
+        const new_installers = [...installers, {fullName:fullName, id:id}]
+        setInstallers(new_installers)
+    }
+
+    const removeInstaller = (e) =>{
+        e.preventDefault()
+        const id = selectRef1.current.value
+        if(id===''){ return }
+        for (let i = 0; i < selectRef1.current.length; i++) {
+            if(selectRef1.current.options[i].value === selectRef1.current.value){
+                selectRef2.current.add(selectRef1.current.options[i])
+            }
+        }
+
+        const new_installers = [...installers]
+        for (let i = 0; i < new_installers.length; i++) {
+            if(id === new_installers[i].id){
+                new_installers.splice(i, 1)
+            }
+        }
+        setInstallers(new_installers)
+    }
 
     if(isLoading){
         return <Spinner />
@@ -70,9 +181,10 @@ const InstallationOrderSetup = () => {
 
     return (
         <>
-            <BackButton url={`/installation-orders/${paramPage}/${paramText?paramText:''}`}></BackButton>
+            {paramType === 'setup'?<BackButton url={`/installation-orders/${paramPage}/${paramText?paramText:''}`}></BackButton>:
+                                   <BackButton url={`/installation-order/${installationOrderId}/${paramPage}/${paramText?paramText:''}`}></BackButton>}
             <section className={styles.heading}>
-                <h5>Set Up Installation Order</h5>
+                <h5>{paramType === 'setup'?'Setup':'Edit'} Installation Order</h5>
             </section>
 
             <section className='form'>
@@ -120,7 +232,8 @@ const InstallationOrderSetup = () => {
                             selectedFiles={selectedFiles} 
                             setSelectedFiles={setSelectedFiles}
                         />
-                    )):<div style={{textAlign:'left', color:'grey'}}>* No PDF files found in <span style={{color:'blue', fontStyle:'italic'}}>Z:/SalesOrders/{installationOrder.entryDate.toString().substring(0,4)}/{installationOrder.customer}/{installationOrder.shipName.trim()} - {installationOrder.shipAddress.substring(0,installationOrder.shipAddress.length-6)} - {installationOrder.installationOrderNumber}</span> directory.</div>}
+                    )):installationOrder.installationOrderNumber?<div style={{textAlign:'left', color:'grey'}}>* No PDF files found in <span style={{color:'blue', fontStyle:'italic'}}>Z:/SalesOrders/{installationOrder.entryDate.toString().substring(0,4)}/{installationOrder.customer}/{installationOrder.shipName.trim()} - {installationOrder.shipAddress.substring(0,installationOrder.shipAddress.length-6)} - {installationOrder.installationOrderNumber}</span> directory.</div>
+                      :null}
                 </div>
 
                 <div className='form-group-horizontal'>

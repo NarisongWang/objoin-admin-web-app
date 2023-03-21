@@ -95,13 +95,13 @@ const InstallationOrderDetail = () => {
 
             <div>&nbsp;</div>
             {(installationOrder.workStatus === 1||installationOrder.workStatus === 2||installationOrder.workStatus === 3) && (
-                <Link to={`/edit-installation-order/${installationOrder._id}`} className='btn btn-block'> Edit Installation Order</Link>
+                <Link to={`/installation-order-edit/${installationOrder._id}/edit/${paramPage}/${paramText?paramText:''}`} className='btn btn-block'> Edit Installation Order</Link>
             )}
              {(installationOrder.workStatus === 0||installationOrder.workStatus ===1) &&(
                 <button onClick={()=>{deleteOrder()}} className='btn btn-block btn-danger'> Delete Installation Order</button>
             )}
             {(installationOrder.workStatus === 4||installationOrder.workStatus === 5) &&(
-                <Link to={`/installation-report/${installationOrder._id}`} className='btn btn-block'> Open Installation Report</Link>
+                <Link to={`/installation-order-report/${installationOrder._id}`} className='btn btn-block' target="_blank" rel="noreferrer"> Open Installation Report</Link>
             )}
             {(installationOrder.workStatus === 4 && installationOrder.workStatus !== 5) && (
                 <button onClick={()=>{closeOrder()}} className='btn btn-block btn-danger'> Close Installation Order</button>

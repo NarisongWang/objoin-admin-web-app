@@ -3,6 +3,8 @@ import { getConfig } from "../../utils/utils"
 
 const API_URL_LIST =  process.env.REACT_APP_API_SERVER+'/admin/installationorders/'
 const API_URL_COUNT = process.env.REACT_APP_API_SERVER+'/admin/countorders'
+const API_URL_SETUP = process.env.REACT_APP_API_SERVER+'/admin/setuporder'
+const API_URL_EDIT = process.env.REACT_APP_API_SERVER+'/admin/editorder'
 const API_URL_CLOSE = process.env.REACT_APP_API_SERVER+'/admin/closeorder'
 const API_URL_DELETE = process.env.REACT_APP_API_SERVER+'/admin/deleteorder'
 
@@ -38,12 +40,27 @@ const deleteInstallationOrder = async(installationOrderId, token) =>{
     return response.data
 }
 
+const setupInstallationOrder = async(installationOrder, token) =>{
+    const config = getConfig(token)
+    const response = await axios.post(API_URL_SETUP, installationOrder, config)
+    return response.data
+}
+
+
+const editInstallationOrder = async(installationOrder, token) =>{
+    const config = getConfig(token)
+    const response = await axios.post(API_URL_EDIT, installationOrder, config)
+    return response.data
+}
+
 const installationOrderAPI = {
     getInstallationOrders,
     getTotalCount,
     getInstallationOrder,
     closeInstallationOrder,
     deleteInstallationOrder,
+    setupInstallationOrder,
+    editInstallationOrder,
 }
 
 export default installationOrderAPI

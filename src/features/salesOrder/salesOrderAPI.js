@@ -3,7 +3,7 @@ import { getConfig } from "../../utils/utils"
 
 const API_URL_LIST = process.env.REACT_APP_API_SERVER+'/mssql/salesorders/'
 const API_URL_COUNT = process.env.REACT_APP_API_SERVER+'/mssql/countsalesorders'
-const API_URL_CREATE = process.env.REACT_APP_API_SERVER+'/admin/createinstallationorders'
+//const API_URL_CREATE = process.env.REACT_APP_API_SERVER+'/admin/createinstallationorders'
 
 // queryParams = { firstPageIndex, pageSize, searchText }
 const getSalesOrders = async (queryParams, token) =>{

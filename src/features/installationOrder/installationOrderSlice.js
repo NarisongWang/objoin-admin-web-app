@@ -83,6 +83,36 @@ export const deleteInstallationOrder = createAsyncThunk(
     }
 )
 
+export const setupInstallationOrder = createAsyncThunk(
+    'installationOrder/setupInstallationOrder', 
+    async (installationOrder, thunkAPI)=>{
+        try {
+            const token = thunkAPI.getState().auth.user.token
+            return await installationOrderAPI.setupInstallationOrder(installationOrder, token)
+        } catch (err) {
+            const message = (err.response && err.response.data && err.response.data.message) 
+                            || err.message || err.toString()
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
+export const editInstallationOrder = createAsyncThunk(
+    'installationOrder/editInstallationOrder', 
+    async (installationOrder, thunkAPI)=>{
+        try {
+            const token = thunkAPI.getState().auth.user.token
+            return await installationOrderAPI.editInstallationOrder(installationOrder, token)
+        } catch (err) {
+            const message = (err.response && err.response.data && err.response.data.message) 
+                            || err.message || err.toString()
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
+
+
 export const installationOrderSlice = createSlice({
     name: 'installationOrder',
     initialState,
@@ -129,6 +159,28 @@ export const installationOrderSlice = createSlice({
                 state.files = initFiles(action.payload.installationOrder.installationOrderNumber, action.payload.files)
             })
             .addCase(getInstallationOrder.rejected, (state, action)=>{
+                state.isLoading = false
+                state.error = action.payload
+            })
+            //reducers for setupInstallationOrder
+            .addCase(setupInstallationOrder.pending, (state) =>{
+                state.isLoading = true
+            })
+            .addCase(setupInstallationOrder.fulfilled, (state) =>{
+                state.isLoading = false
+            })
+            .addCase(setupInstallationOrder.rejected, (state, action) =>{
+                state.isLoading = false
+                state.error = action.payload
+            })
+            //reducers for editInstallationOrder
+            .addCase(editInstallationOrder.pending, (state) =>{
+                state.isLoading = true
+            })
+            .addCase(editInstallationOrder.fulfilled, (state) =>{
+                state.isLoading = false
+            })
+            .addCase(editInstallationOrder.rejected, (state, action) =>{
                 state.isLoading = false
                 state.error = action.payload
             })

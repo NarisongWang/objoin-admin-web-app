@@ -24,12 +24,12 @@ const InstallationOrderItem = ({ installationOrder, currentPage, searchText }) =
             <div>{installationOrder.shipAddress}</div>
             <div>{date}</div>
             {installationOrder.workStatus===0? (
-                <Link to={`/installation-order-setup/${installationOrder._id}/${currentPage}/${searchText}`} className='btn btn-sm'>
+                <Link to={`/installation-order-setup/${installationOrder._id}/setup/${currentPage}/${searchText}`} className='btn btn-sm'>
                     Set Up
                 </Link>
             ):
             installationOrder.workStatus===4||installationOrder.workStatus===5?(
-                <Link to={`/installation-report/${installationOrder._id}`} target="_blank" className='btn btn-sm'>
+                <Link to={`/installation-order-report/${installationOrder._id}`} target="_blank" rel="noreferrer" className='btn btn-sm'>
                     Installation Report
                 </Link>
             ):

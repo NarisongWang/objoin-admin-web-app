@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styles from './PdfSelect.module.css'
 
 const PdfSelect = ({ file, filePath, handleCheckBoxChange}) => {
