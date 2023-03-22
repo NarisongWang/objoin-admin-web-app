@@ -224,7 +224,7 @@ const InstallationOrderSetup = () => {
                     <input type='text' className='form-control' value={dictionary.workStatus[installationOrder.workStatus]?dictionary.workStatus[installationOrder.workStatus].statusDesc:''} disabled></input>
                 </div>
                 <div className='form-group'>
-                    <label htmlFor='files'>Files</label>
+                    <label htmlFor='files'>PDF Files in<span style={{color:'blue', fontWeight:'bold'}}> Local File Server</span></label>
                     {files.length!==0?files.map((directory,index)=>(
                         <PdfSelectContainer 
                             key={index} 
@@ -232,7 +232,7 @@ const InstallationOrderSetup = () => {
                             selectedFiles={selectedFiles} 
                             setSelectedFiles={setSelectedFiles}
                         />
-                    )):installationOrder.installationOrderNumber?<div style={{textAlign:'left', color:'grey'}}>* No PDF files found in <span style={{color:'blue', fontStyle:'italic'}}>Z:/SalesOrders/{installationOrder.entryDate.toString().substring(0,4)}/{installationOrder.customer}/{installationOrder.shipName.trim()} - {installationOrder.shipAddress.substring(0,installationOrder.shipAddress.length-6)} - {installationOrder.installationOrderNumber}</span> directory.</div>
+                    )):installationOrder.installationOrderNumber?<div style={{textAlign:'left', color:'grey'}}>* No PDF files found in <span style={{color:'blue', fontStyle:'italic'}}>Z:/SalesOrders/{installationOrder.entryDate.toString().substring(0,4)}/{installationOrder.customer}/{installationOrder.shipName.trim()} - {installationOrder.shipAddress.substring(0,installationOrder.shipAddress.length-6)} - {installationOrder.installationOrderNumber}/</span> directory.</div>
                       :null}
                 </div>
 

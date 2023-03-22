@@ -60,52 +60,83 @@ const InstallationOrderDetail = () => {
 
     return (
         <div className={styles.orderDetail}>
-            <BackButton url={`/installation-orders/${paramPage}/${paramText?paramText:''}`}></BackButton>
             <h2>
-                Installation Order Number: 
+                <BackButton url={`/installation-orders/${paramPage}/${paramText?paramText:''}`}></BackButton>
+                Installation Order Details 
                 <span className={`status status-${installationOrder.workStatus}`}>
                     {workStatus}
                 </span>
             </h2>
-            <li>{installationOrder.installationOrderNumber} </li>
-            <h3>Customer:</h3> <li>{installationOrder.customer} </li>
-            <h3>Ship Name:</h3> <li>{installationOrder.shipName} </li>
-            <h3>Ship Address:</h3><li>{installationOrder.shipAddress}</li>
-            <h3>Entry Date:</h3><li>{parseDate(installationOrder.entryDate)} </li>
-            <h3>Due Date:</h3><li>{parseDate(installationOrder.dueDate)} </li>
-            <h3>Installation Items: </h3> {installationOrder.checkItems?installationOrder.checkItems.map((checkItem,index)=>{
-                return <li key={index}>{checkItem}</li>
-            }):""}
-            <h3>Deliverers: </h3> {installationOrder.deliverers?installationOrder.deliverers.map((user,index)=>{
-                return <li key={index}>{user.fullName}</li>
-            }):""}
-            <h3>Installers: </h3> {installationOrder.installers?installationOrder.installers.map((user,index)=>{
-                return <li key={index}>{user.fullName}</li>
-            }):""}
-            <h3>PDF Files:</h3> {installationOrder.files?installationOrder.files.map((file,index)=>{
-                return <li key={index}><a href={"http://192.168.2.5:3088/"+installationOrder.localFilePath.substring(32)+file} className="link" target="_blank" rel="noreferrer">{file}</a></li>
-            }):""}
-            <h3>Photos:</h3> 
-            {installationOrder.photos1?installationOrder.photos1.map((photo,index)=>{
-                return <li key={index}><a href={"/display-photo/"+photo.replaceAll('/','-')} className="link" target="_blank" rel="noreferrer">{photo}</a></li>
-            }):""}
-            {installationOrder.photos2?installationOrder.photos2.map((photo,index)=>{
-                return <li key={index}><a href={"/display-photo/"+photo.replaceAll('/','-')} className="link" target="_blank" rel="noreferrer">{photo}</a></li>
-            }):""}
-
-            <div>&nbsp;</div>
-            {(installationOrder.workStatus === 1||installationOrder.workStatus === 2||installationOrder.workStatus === 3) && (
-                <Link to={`/installation-order-edit/${installationOrder._id}/edit/${paramPage}/${paramText?paramText:''}`} className='btn btn-block'> Edit Installation Order</Link>
-            )}
-             {(installationOrder.workStatus === 0||installationOrder.workStatus ===1) &&(
-                <button onClick={()=>{deleteOrder()}} className='btn btn-block btn-danger'> Delete Installation Order</button>
-            )}
-            {(installationOrder.workStatus === 4||installationOrder.workStatus === 5) &&(
-                <Link to={`/installation-order-report/${installationOrder._id}`} className='btn btn-block' target="_blank" rel="noreferrer"> Open Installation Report</Link>
-            )}
-            {(installationOrder.workStatus === 4 && installationOrder.workStatus !== 5) && (
-                <button onClick={()=>{closeOrder()}} className='btn btn-block btn-danger'> Close Installation Order</button>
-            )}
+            <section className='form'>
+                <div className='form-group'>
+                    <label htmlFor='installationOrderNumber'>Installation Order Number</label>
+                    <input type='text' className='form-control' value={installationOrder.installationOrderNumber} disabled></input>
+                </div>
+                <div className='form-group'>
+                    <label htmlFor='clientName'>Customer</label>
+                    <input type='text' className='form-control' value={installationOrder.customer} disabled></input>
+                </div>
+                <div className='form-group'>
+                    <label htmlFor='deliveryName'>Ship Name</label>
+                    <input type='text' className='form-control' value={installationOrder.shipName} disabled></input>
+                </div>
+                <div className='form-group'>
+                    <label htmlFor='deliveryAddress'>Ship Address</label>
+                    <input type='text' className='form-control' value={installationOrder.shipAddress} disabled></input>
+                </div>
+                <div className='form-group'>
+                    <label htmlFor='entyrDate'>Entry Date</label>
+                    <input type='text' className='form-control' value={parseDate(installationOrder.entryDate)} disabled></input>
+                </div>
+                <div className='form-group'>
+                    <label htmlFor='dueDate'>Due Date</label>
+                    <input type='text' className='form-control' value={parseDate(installationOrder.dueDate)} disabled></input>
+                </div>
+                <div className='form-group'>
+                    <label htmlFor='checkItems'>Installtion Items</label>
+                    {installationOrder.checkItems&&installationOrder.checkItems.length!==0?
+                    <textarea type='text' style={{height:`${installationOrder.checkItems.length*20+25}px`, resize: 'none'}} value={installationOrder.checkItems.join('\n')} disabled></textarea>
+                    :<textarea type='text' style={{height:'45px', resize: 'none', color: 'grey', fontStyle:'italic'}} className='form-control' value='* No installation items found' disabled></textarea>}
+                </div>
+                <div className='form-group'>
+                    <label htmlFor='deliverers'>Deliverer</label>
+                    {installationOrder.deliverers&&installationOrder.deliverers.length>0?<input type='text' className='form-control' value={installationOrder.deliverers.map(user=>user.fullName)} disabled></input>
+                    :<input type='text' style={{height:'45px', resize: 'none', color: 'grey', fontStyle:'italic'}} value="* Installation Order hasn't been setup." disabled></input>}
+                </div>
+                <div className='form-group'>
+                    <label htmlFor='installers'>Installer</label>
+                    {installationOrder.installers&&installationOrder.installers.length>0?<input type='text' className='form-control' value={installationOrder.installers.map(user=>user.fullName)} disabled></input>
+                    :<input type='text' style={{height:'45px', resize: 'none', color: 'grey', fontStyle:'italic'}} value="* Installation Order hasn't been setup." disabled></input>}
+                </div>
+                <div className='form-group'>
+                    <label htmlFor='files'>PDF Files <span style={{color:'blue', fontWeight:'bold'}}>Uploaded to Cloud</span></label>
+                    {installationOrder.files?installationOrder.files.map((file,index)=>{
+                        return <li key={index}><a href={"http://192.168.2.5:3088/"+installationOrder.localFilePath.substring(32)+file} className="link" target="_blank" rel="noreferrer">{file}</a></li>
+                    }):""}
+                </div>
+                <div className='form-group'>
+                    <label htmlFor='photos'>Photos <span style={{color:'blue', fontWeight:'bold'}}>Uploaded to Cloud</span></label>
+                    {installationOrder.photos1?installationOrder.photos1.map((photo,index)=>{
+                        return <li key={index}><a href={"/display-photo/"+photo.replaceAll('/','-')} className="link" target="_blank" rel="noreferrer">{photo}</a></li>
+                    }):""}
+                    {installationOrder.photos2?installationOrder.photos2.map((photo,index)=>{
+                        return <li key={index}><a href={"/display-photo/"+photo.replaceAll('/','-')} className="link" target="_blank" rel="noreferrer">{photo}</a></li>
+                    }):""}
+                </div>
+                <div>&nbsp;</div>
+                {(installationOrder.workStatus === 1||installationOrder.workStatus === 2||installationOrder.workStatus === 3) && (
+                    <Link to={`/installation-order-edit/${installationOrder._id}/edit/${paramPage}/${paramText?paramText:''}`} className='btn btn-block'> Edit Installation Order</Link>
+                )}
+                {(installationOrder.workStatus === 0||installationOrder.workStatus ===1) &&(
+                    <button onClick={()=>{deleteOrder()}} className='btn btn-block btn-danger'> Delete Installation Order</button>
+                )}
+                {(installationOrder.workStatus === 4||installationOrder.workStatus === 5) &&(
+                    <Link to={`/installation-order-report/${installationOrder._id}`} className='btn btn-block' target="_blank" rel="noreferrer"> Open Installation Report</Link>
+                )}
+                {(installationOrder.workStatus === 4 && installationOrder.workStatus !== 5) && (
+                    <button onClick={()=>{closeOrder()}} className='btn btn-block btn-danger'> Close Installation Order</button>
+                )}
+            </section>
         </div>
     )
 }

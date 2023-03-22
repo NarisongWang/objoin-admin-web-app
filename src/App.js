@@ -12,6 +12,7 @@ import InstallationOrderDetail from './pages/installationOrder/InstallationOrder
 import InstallationOrderSetup from './pages/installationOrder/InstallationOrderSetup'
 import InstallationOrderReport from './pages/installationOrder/InstallationOrderReport'
 import SalesOrderList from './pages/salesOrder/SalesOrderList'
+import SalesOrderDetail from './pages/salesOrder/SalesOrderDetail'
 import DisplayPhoto from './pages/home/DisplayPhoto'
 import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
@@ -53,6 +54,7 @@ const App = () =>{
                 <Route path='/installation-order-setup/:installationOrderId/:paramType/:paramPage/:paramText?' element={<InstallationOrderSetup />} />
                 <Route path='/installation-order-edit/:installationOrderId/:paramType/:paramPage/:paramText?' element={<InstallationOrderSetup />} />
                 <Route path='/sales-orders/:paramPage?/:paramText?' element={<SalesOrderList />} />
+                <Route path='/sales-order/:salesOrderId/:paramPage/:paramText?' element={<SalesOrderDetail />} />
                 <Route path='/*' element={<PageNotFound />} />
             </Route>
             {/* LayoutWithoutHeader & PrivateRoute */}

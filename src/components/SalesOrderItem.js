@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { parseDate } from '../utils/utils'
 import styles from './SalesOrderItem.module.css'
 
-const SalesOrderItem = ({ index, salesOrder, select, setSelect }) => {
+const SalesOrderItem = ({ index, salesOrder, select, setSelect, currentPage, searchText  }) => {
     const [ checked, setChecked ] = useState(false) 
     const checkSelection = () => {
         const newChecked = !checked;
@@ -25,7 +25,7 @@ const SalesOrderItem = ({ index, salesOrder, select, setSelect }) => {
                 (<input type='checkbox' checked={true} disabled></input>):
                 (<input type='checkbox' checked={checked} onChange={checkSelection}></input>)
             }
-            <Link to={`/load-installation-orders/${salesOrder.ID}`} className='link'>
+            <Link to={`/sales-order/${salesOrder.ID}/${currentPage}/${searchText}`} className='link'>
                 {salesOrder.installationOrderNumber}
             </Link> 
             <div>{parseDate(salesOrder.dueDate)}</div>

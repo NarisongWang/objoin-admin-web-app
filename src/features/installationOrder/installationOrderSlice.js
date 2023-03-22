@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import installationOrderAPI from "./installationOrderAPI"
+import { initFiles } from "../../utils/utils"
 
 const initialState = {
     installationOrders: [],
@@ -186,26 +187,5 @@ export const installationOrderSlice = createSlice({
             })
     }
 })
-
-const initFiles = (installationOrderNumber, files) => {
-    const result = files.reduce(
-        (accumulator, file, index) => {
-            const lastIndex = file.lastIndexOf('\\')+1
-            const file_path = file.substring(0, lastIndex)
-            const file_dir = file.substring(file.indexOf(installationOrderNumber),lastIndex-1)
-            const file_name = file.substring(lastIndex, file.length)
-
-            const dirIndex = accumulator.findIndex((item) => item.file_dir === file_dir);
-            if(dirIndex === -1) {
-                let dirObject = { file_path: file_path, file_dir: file_dir, files: [{id: index, file_name:file_name, isChecked:false}] }
-                accumulator.push(dirObject);
-            } else {
-                accumulator[dirIndex].files.push({id: index, file_name:file_name, isChecked:false})
-            }
-            return accumulator
-        }, []
-    )
-    return result
-}
 
 export default installationOrderSlice.reducer

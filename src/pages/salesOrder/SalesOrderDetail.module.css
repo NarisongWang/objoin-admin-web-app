@@ -1,0 +1,37 @@
+.orderDetail {
+    position: relative;
+    text-align: left;
+}
+
+.orderDetail h2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.loaded {
+    background-color: #333;
+    color: #fff;
+    width: 140px;
+    padding: 0 20px;
+    justify-self: center;
+    border-radius: 10px;
+    font-size: 14px;
+    text-align: center;
+    background-color: green;
+    margin-right: 10px;
+}
+
+.notLoaded {
+    background-color: #333;
+    color: #fff;
+    width: 140px;
+    padding: 0 20px;
+    justify-self: center;
+    border-radius: 10px;
+    font-size: 14px;
+    text-align: center;
+    background-color: grey;
+    margin-right: 10px;
+}

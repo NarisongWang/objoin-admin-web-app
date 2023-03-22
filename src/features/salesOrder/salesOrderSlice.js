@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import salesOrderAPI from "./salesOrderAPI"
+import { initFiles } from "../../utils/utils"
 
 const initialState = {
     salesOrders: [],
@@ -42,9 +43,11 @@ export const getTotalCount = createAsyncThunk(
 
 export const getSalesOrder = createAsyncThunk(
     'salesOrder/getSalesOrder',
-    async(queryParams, thunkAPI)=>{
+    async(salesOrderId, thunkAPI)=>{
         try {
-            
+            const token = thunkAPI.getState().auth.user.token
+            const data = await salesOrderAPI.getSalesOrder(salesOrderId, token)
+            return data
         } catch (err) {
             const message = (err.response && err.response.data && err.response.data.message)
                             || err.message || err.toString()
@@ -57,7 +60,9 @@ export const createInstallationOrders = createAsyncThunk(
     'salesOrder/createInstallationOrders' ,
     async(salesOrders, thunkAPI)=>{
         try {
-
+            const token = thunkAPI.getState().auth.user.token
+            const data = await salesOrderAPI.createInstallationOrders(salesOrders, token)
+            return data
         } catch (err) {
             const message = (err.response && err.response.data && err.response.data.message)
                             || err.message || err.toString()
@@ -94,14 +99,51 @@ export const salesOrderSlice = createSlice({
                 state.error = ''
             })
             .addCase(getTotalCount.fulfilled, (state, action) =>{
-                state.isLoading = false
                 state.totalCount = action.payload
             })
             .addCase(getTotalCount.rejected, (state, action)=>{
                 state.isLoading = false
                 state.error = action.payload
             })
+            //reducers for getSalesOrder
+            .addCase(getSalesOrder.pending,(state)=>{
+                state.isLoading = true
+                state.error = ''
+                state.salesOrder = {}
+            })
+            .addCase(getSalesOrder.fulfilled, (state, action) =>{
+                state.isLoading = false
+                state.salesOrder = action.payload.salesOrder
+                state.files = initFiles(action.payload.salesOrder.installationOrderNumber, action.payload.files)
+            })
+            .addCase(getSalesOrder.rejected, (state, action)=>{
+                state.isLoading = false
+                state.error = action.payload
+            })
+            //reducers for createInstallationOrders
+            .addCase(createInstallationOrders.pending, (state)=>{
+                state.isLoading = true
+            })
+            .addCase(createInstallationOrders.fulfilled, (state, action)=>{
+                state.isLoading = false
+                state.salesOrders = updateSalesOrders(state.salesOrders, action.payload)
+            })
+            .addCase(createInstallationOrders.rejected, (state, action)=>{
+                state.isLoading = false
+                state.error = action.payload
+            })
     }
 })
+
+const updateSalesOrders = (salesOrders, newInstallationOrders) =>{
+    const newSalesOrders = [...salesOrders]
+    for (const installationOrder of newInstallationOrders) {
+        let salesOrder = newSalesOrders.find(salesOrder => salesOrder.installationOrderNumber===installationOrder.installationOrderNumber)
+        if(salesOrder){
+            salesOrder.loaded = true
+        }
+    }
+    return newSalesOrders
+}
 
 export default salesOrderSlice.reducer

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { getSalesOrders, getTotalCount } from '../../features/salesOrder/salesOrderSlice'
+import { getSalesOrders, getTotalCount, createInstallationOrders } from '../../features/salesOrder/salesOrderSlice'
 import { toast } from 'react-toastify'
 import SalesOrderItem from '../../components/SalesOrderItem'
 import BackButton from '../../components/BackButton'
@@ -54,6 +54,24 @@ const SalesOrderList = () => {
         dispatch(getSalesOrders({ firstPageIndex:0, pageSize, searchText:'' }))
         dispatch(getTotalCount({searchText:''}))
     }
+
+    const loadOrders = () =>{
+        if(select.length===0){
+            toast.warning('Please select at least one sales order!')
+        }else{
+            const selectOrder = select.sort(function(a, b) {
+              return a - b;
+            })
+            let selectedSalesOrders = []
+            for (let i = 0; i < selectOrder.length; i++) {
+                selectedSalesOrders.push(salesOrders[selectOrder[i]]);
+            }
+            dispatch(createInstallationOrders({salesOrders:selectedSalesOrders}))
+            .unwrap().then(()=>{
+                toast.success('Selected sales orders has been successfully loaded!')
+            }).catch(toast.error)
+        }
+    }
     
     if (isLoading) {
         return <Spinner />
@@ -64,7 +82,7 @@ const SalesOrderList = () => {
             <div className='flex-row'>
                 <BackButton url='/'/>
                 <h1>Load Sales Orders (from Seradex)</h1>
-                <button className='btn btn-back' onClick={()=>{}}>
+                <button className='btn btn-back' onClick={loadOrders}>
                     <FaDownload />Load
                 </button>
             </div>
@@ -90,7 +108,7 @@ const SalesOrderList = () => {
                 </div>
                 <br />
                 {salesOrders.map((salesOrder,index) =>(
-                    <SalesOrderItem key={salesOrder.ID} index={index} salesOrder={salesOrder} select={select} setSelect={setSelect} />
+                    <SalesOrderItem key={salesOrder.ID} index={index} salesOrder={salesOrder} select={select} setSelect={setSelect} currentPage={currentPage} searchText={searchText}/>
                 ))}
                 <Pagination
                     className="pagination-bar"
