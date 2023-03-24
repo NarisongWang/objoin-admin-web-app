@@ -14,10 +14,10 @@ const Home = () => {
         <Link to='/sales-orders' className='btn btn-menu'>
             <FaStaylinked />Load Sales Orders
         </Link>
-        <Link to='/manage-employees' className='btn btn-menu'>
+        <Link to='/employees' className='btn btn-menu'>
             <FaPeopleArrows />Manage Employees
         </Link>
-        <Link to='' className='btn btn-menu'>
+        <Link to='/check-list' className='btn btn-menu'>
             <FaCheckSquare />Manage Check List
         </Link>
       </section>

@@ -1,0 +1,13 @@
+.headings {
+    display: grid;
+    grid-template-columns: 90px 100px 140px 90px 140px 150px;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    background: #f4f4f4;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 700;
+}

@@ -62,7 +62,7 @@ const InstallationOrderList = () => {
             <div className='flex-row'>
                 <BackButton url='/' />
                 <h1>Installation Orders</h1>
-                <div>&nbsp;</div>
+                <div style={{width:'150px'}}></div>
             </div>
 
             <div style={{marginBottom:"10px"}}>

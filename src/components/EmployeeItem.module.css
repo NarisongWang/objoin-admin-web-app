@@ -1,13 +1,15 @@
-.employeeDetail {
-    position: relative;
-    text-align: left;
-}
-
-.employeeDetail h2 {
-    display: flex;
-    align-items: center;
+.employeeItems {
+    display: grid;
+    grid-template-columns: 90px 100px 140px 90px 140px 150px;
+    gap: 20px;
     justify-content: space-between;
-    margin-bottom: 50px;
+    align-items: center;
+    margin-bottom: 10px;
+    background: #f4f4f4;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+    vertical-align: middle;
 }
 
 .notLoaded {
@@ -52,23 +54,4 @@
     font-size: 12px;
     text-align: center;
     background-color: #20babd;
-}
-
-.container {
-    background-color: rgba(239, 239, 239, 0.3);
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #e6e6e6;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    font-family: inherit;
-}
-
-.radio {
-    display: flex;
-    align-items: flex-end;
-    width: 50px;
-    margin: 5px;
 }
