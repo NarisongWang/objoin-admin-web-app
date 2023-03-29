@@ -10,3 +10,16 @@
     border-radius: 5px;
     text-align: center;
 }
+
+.seleced {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    background: lightgrey;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-align: center;
+}

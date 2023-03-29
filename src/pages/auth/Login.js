@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 import { FaSignInAlt } from 'react-icons/fa'
 import { login } from '../../features/auth/authSlice'
 import Spinner from '../../components/Spinner'
+import styles from './Login.module.css'
 
 const Login = () => {
     const [ formData, setFormData ] = useState({
@@ -51,8 +52,8 @@ const Login = () => {
     return (
     <>
         <section>
-            <h1>
-                <FaSignInAlt style={{color:'#2196F3'}}></FaSignInAlt> Login
+            <h1 className={styles.flexCenter}>
+                <FaSignInAlt className={styles.svg}></FaSignInAlt> Login
             </h1>
         </section>
         <section className='form'>

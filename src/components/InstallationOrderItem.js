@@ -4,15 +4,14 @@ import { Link } from 'react-router-dom'
 import styles from './InstallationOrderItem.module.css'
 import { parseDate } from '../utils/utils'
 
-const InstallationOrderItem = ({ installationOrder, currentPage, searchText }) => {
+const InstallationOrderItem = ({ installationOrder, currentPage, searchText, select }) => {
     const { dictionary } = useSelector(
         (state) => state.auth
     )
     const statusDesc = dictionary.workStatus?
         dictionary.workStatus[installationOrder.workStatus].statusDesc:''
-    const date = parseDate(installationOrder.dueDate)
     return (
-        <div className={styles.orderItems}>
+        <div className={select&&select.installationOrderNumber===installationOrder.installationOrderNumber?styles.seleced:styles.orderItems}>
             <div>
                 <Link to={`/installation-order/${installationOrder._id}/${currentPage}/${searchText}`} className='link'>
                     {installationOrder.installationOrderNumber}
@@ -22,8 +21,9 @@ const InstallationOrderItem = ({ installationOrder, currentPage, searchText }) =
             <div>{installationOrder.customer}</div>
             <div>{installationOrder.shipName}</div>
             <div>{installationOrder.shipAddress}</div>
-            <div>{date}</div>
-            {installationOrder.workStatus===0? (
+            <div>{parseDate(installationOrder.entryDate)}</div>
+            <div>{parseDate(installationOrder.dueDate)}</div>
+            {/* {installationOrder.workStatus===0? (
                 <Link to={`/installation-order-setup/${installationOrder._id}/setup/${currentPage}/${searchText}`} className='btn btn-sm'>
                     Set Up
                 </Link>
@@ -35,7 +35,7 @@ const InstallationOrderItem = ({ installationOrder, currentPage, searchText }) =
             ):
             (<button className='btn btn-grey' disabled>
             Installation Report
-            </button>)}
+            </button>)} */}
         </div>
     )
 }

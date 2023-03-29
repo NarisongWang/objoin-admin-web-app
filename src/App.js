@@ -16,6 +16,7 @@ import SalesOrderList from './pages/salesOrder/SalesOrderList'
 import SalesOrderDetail from './pages/salesOrder/SalesOrderDetail'
 import EmployeeList from './pages/employee/EmployeeList'
 import EmployeeDetail from './pages/employee/EmployeeDetail'
+import EditCheckList from './pages/checkList/EditCheckList'
 import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
 
@@ -59,6 +60,7 @@ const App = () =>{
                 <Route path='/sales-order/:salesOrderId/:paramPage/:paramText?' element={<SalesOrderDetail />} />
                 <Route path='/employees/:paramPage?/:paramText?' element={<EmployeeList />} />
                 <Route path='/employee/:employeeId/:paramPage/:paramText?' element={<EmployeeDetail />} />
+                <Route path='/checklist-edit/' element={<EditCheckList />} />
                 <Route path='/*' element={<PageNotFound />} />
             </Route>
             {/* LayoutWithoutHeader & PrivateRoute */}

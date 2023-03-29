@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { getEmployees, getTotalCount } from '../../features/employee/employeeSlice' 
+import { getEmployees, getTotalCount, resendEmail } from '../../features/employee/employeeSlice' 
 import EmployeeItem from '../../components/EmployeeItem'
 import Pagination from '../../components/Pagination'
 import BackButton from '../../components/BackButton'
 import Spinner from '../../components/Spinner'
+import { FaUserPlus,
+        FaUserTimes,
+        FaEnvelope } from 'react-icons/fa'
 import styles from './EmployeeList.module.css'
 
 const EmployeeList = () => {
@@ -14,12 +17,14 @@ const EmployeeList = () => {
     const { paramPage, paramText } = useParams()
     const [ currentPage, setCurrentPage ] = useState(paramPage?parseInt(paramPage):1)
     const [ searchText, setSearchText ] = useState(paramText?paramText:'')
+    const [ select, setSelect ] = useState(null)
 
     const { employees, totalCount, isLoading, error } = useSelector(
         (state) => state.employee
     )
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     useEffect(()=>{
         const firstPageIndex = (currentPage - 1) * pageSize
@@ -35,22 +40,49 @@ const EmployeeList = () => {
     },[error])
 
     const onPageChange = (page) =>{
+        setSelect(null)
         setCurrentPage(page)
         const firstPageIndex = (page - 1) * pageSize
         dispatch(getEmployees({ firstPageIndex, pageSize, searchText }))
     }
 
     const search = () =>{
+        setSelect(null)
         setCurrentPage(1)
         dispatch(getEmployees({ firstPageIndex:0, pageSize, searchText }))
         dispatch(getTotalCount({searchText}))
     }
 
     const clearSearch = () =>{
+        setSelect(null)
         setSearchText('')
         setCurrentPage(1)
         dispatch(getEmployees({ firstPageIndex:0, pageSize, searchText:'' }))
         dispatch(getTotalCount({searchText:''}))
+    }
+
+    const selectEmployee = (EmployeeID,email,status,userType) =>{
+        setSelect({
+            EmployeeID,
+            email,
+            status,
+            userType
+        })
+    }
+
+    // const activateAccount = () =>{
+
+    // }
+
+    const closeAccount = () =>{
+
+    }
+
+    const resend = () =>{
+        dispatch(resendEmail({email:select.email}))
+        .unwrap().then(()=>{
+            toast.success('Email sent successfully!')
+        }).catch(toast.error)
     }
 
     if(isLoading){
@@ -65,13 +97,29 @@ const EmployeeList = () => {
                 <div style={{width:'150px'}}></div>
             </div>
 
-            <div style={{marginBottom:"10px"}}>
-                <input 
-                    value={searchText}
-                    onChange={(e) => setSearchText(e.target.value)}
-                    placeholder='First name or Last name'></input>
-                <button onClick={()=>search()} style={{marginLeft:"10px",width:"80px"}}>Search</button>
-                <button onClick={()=>clearSearch()} style={{marginLeft:"10px",width:"80px"}}>Clear</button>
+            <div className='flex-row'>
+                <div>
+                    <input 
+                        value={searchText}
+                        onChange={(e) => setSearchText(e.target.value)}
+                        placeholder='First name or Last name'></input>
+                    <button onClick={()=>search()} style={{marginLeft:"10px",width:"80px"}}>Search</button>
+                    <button onClick={()=>clearSearch()} style={{marginLeft:"10px",width:"80px"}}>Clear</button>
+                </div>
+                <div className='flex-row'>
+                    <div 
+                        className={select&&select.status===undefined?styles.buttonBlue:styles.buttonGrey}
+                        onClick={select?()=>{navigate(`/employee/${select.EmployeeID}/${currentPage}/${searchText}`)}:undefined}
+                    ><FaUserPlus/> Activate Account</div>
+                    <div 
+                        className={select&&select.status!==undefined?styles.buttonBlue:styles.buttonGrey}
+                        onClick={select?()=>{closeAccount()}:undefined}
+                    ><FaUserTimes/> Close Account</div>
+                    <div 
+                        className={select&&select.status===0?styles.buttonBlue:styles.buttonGrey}
+                        onClick={select?()=>{resend()}:undefined}
+                    ><FaEnvelope/> Resend Validation Email</div>
+                </div>
             </div>
             <div>
                 <div className={styles.headings}>
@@ -79,12 +127,18 @@ const EmployeeList = () => {
                     <div>Emp Type</div>
                     <div>First Name</div>
                     <div>Last Name</div>
+                    <div>Phone</div>
                     <div>Email</div>
                     <div>Account Status</div>
                 </div>
-                <br />
-                {employees.map((employee,index) =>(
-                    <EmployeeItem key={employee.EmployeeID} employee={employee} currentPage={currentPage} searchText={searchText}/>
+                {employees.map((employee) =>(
+                    <div key={employee.EmployeeID} onClick={()=>{selectEmployee(employee.EmployeeID,employee.email,employee.status,employee.userType)}}>
+                        <EmployeeItem 
+                            employee={employee} 
+                            currentPage={currentPage} 
+                            searchText={searchText}
+                            select={select}/>
+                    </div>
                 ))}
                 <Pagination
                     className="pagination-bar"

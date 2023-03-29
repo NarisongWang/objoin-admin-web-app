@@ -4,6 +4,7 @@ import { getConfig } from "../../utils/utils"
 const API_URL_EMP_LIST = process.env.REACT_APP_API_SERVER+'/mssql/employees/'
 const API_URL_EMP_COUNT =  process.env.REACT_APP_API_SERVER+'/mssql/countemployees'
 const API_URL_EMP_ACTIVATE = process.env.REACT_APP_API_SERVER+'/admin/activateuser'
+const API_URL_EMP_RESEND = process.env.REACT_APP_API_SERVER+'/admin/resendemail'
 
 const getEmployees = async(queryParams, token) =>{
     const config = getConfig(token)
@@ -29,13 +30,20 @@ const activateAccount = async(formData, token) =>{
     return response.data
 }
 
+const resendEmail = async(formData, token) =>{
+    const config = getConfig(token)
+    const response = await axios.post(API_URL_EMP_RESEND, formData, config)
+    return response.data
+}
+
 
 
 const employeeAPI = {
     getEmployees,
     getTotalCount,
     getEmployee,
-    activateAccount
+    activateAccount,
+    resendEmail
 }
 
 export default employeeAPI

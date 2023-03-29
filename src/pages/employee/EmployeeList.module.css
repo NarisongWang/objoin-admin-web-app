@@ -1,6 +1,6 @@
 .headings {
     display: grid;
-    grid-template-columns: 90px 100px 140px 90px 140px 150px;
+    grid-template-columns: 50px 50px 120px 80px 110px 150px 130px;
     gap: 20px;
     justify-content: space-between;
     align-items: center;
@@ -10,4 +10,22 @@
     border-radius: 5px;
     text-align: center;
     font-weight: 700;
+}
+
+
+.buttonGrey {
+    padding: 5px 10px 5px 10px;
+    width:auto;
+    color: gray;
+}
+
+.buttonBlue {
+    padding: 5px 10px 5px 10px;
+    width:auto;
+    color: blue;
+    cursor: pointer;
+}
+
+.buttonBlue:hover {
+    background-color: #f4f4f4;
 }

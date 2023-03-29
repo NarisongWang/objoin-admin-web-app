@@ -68,6 +68,20 @@ export const activateAccount = createAsyncThunk(
     }
 )
 
+export const resendEmail = createAsyncThunk(
+    'employee/resendEmail',
+    async(formData, thunkAPI)=>{
+        try {
+            const token = thunkAPI.getState().auth.user.token
+            return await employeeAPI.resendEmail(formData, token)
+        } catch (err) {
+            const message = (err.response && err.response.data && err.response.data.message) 
+            || err.message || err.toString()
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
 export const employeeSlice = createSlice({
     name: 'employee',
     initialState,
@@ -112,6 +126,29 @@ export const employeeSlice = createSlice({
                 state.error = action.payload
                 state.isLoading = false
             })
+            //reducers for activateAccount
+            .addCase(activateAccount.pending, (state)=>{
+                state.isLoading = true
+            })
+            .addCase(activateAccount.fulfilled, (state)=>{
+                state.isLoading = false
+            })
+            .addCase(activateAccount.rejected, (state,action)=>{
+                state.error = action.payload
+                state.isLoading = false
+            })
+            //reducers for resendEmail
+            .addCase(resendEmail.pending, (state)=>{
+                state.isLoading = true
+            })
+            .addCase(resendEmail.fulfilled, (state)=>{
+                state.isLoading = false
+            })
+            .addCase(resendEmail.rejected, (state,action)=>{
+                state.error = action.payload
+                state.isLoading = false
+            })
+
     }
 })
 

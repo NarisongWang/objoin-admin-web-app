@@ -17,7 +17,7 @@ const Home = () => {
         <Link to='/employees' className='btn btn-menu'>
             <FaPeopleArrows />Manage Employees
         </Link>
-        <Link to='/check-list' className='btn btn-menu'>
+        <Link to='/checklist-edit' className='btn btn-menu'>
             <FaCheckSquare />Manage Check List
         </Link>
       </section>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {StrictMode} from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { store } from './app/store'
@@ -11,7 +11,9 @@ const root = createRoot(container);
 
 root.render(
     <Provider store={store}>
-      <App />
+      <StrictMode>
+        <App />
+      </StrictMode>
     </Provider>
 );
 

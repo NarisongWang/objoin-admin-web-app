@@ -15,7 +15,7 @@ const SalesOrderList = () => {
     const { paramPage, paramText } = useParams()
     const [ currentPage, setCurrentPage ] = useState(paramPage?parseInt(paramPage):1)
     const [ searchText, setSearchText ] = useState(paramText?paramText:'')
-    const [select, setSelect] = useState([])
+    const [ select, setSelect ] = useState([])
 
     const { salesOrders, totalCount, isLoading, error }  = useSelector(
         (state) => state.salesOrder
@@ -26,7 +26,7 @@ const SalesOrderList = () => {
     useEffect(()=>{
         const firstPageIndex = (currentPage - 1) * pageSize
         dispatch(getSalesOrders({ firstPageIndex, pageSize, searchText }))
-        dispatch(getTotalCount({searchText}))
+        dispatch(getTotalCount({ searchText }))
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
@@ -37,18 +37,21 @@ const SalesOrderList = () => {
     },[error])
 
     const onPageChange = (page) =>{
+        setSelect([])
         setCurrentPage(page)
         const firstPageIndex = (page - 1) * pageSize
         dispatch(getSalesOrders({ firstPageIndex, pageSize, searchText }))
     }
 
     const search = () =>{
+        setSelect([])
         setCurrentPage(1)
         dispatch(getSalesOrders({ firstPageIndex:0, pageSize, searchText }))
         dispatch(getTotalCount({searchText}))
     }
 
     const clearSearch = () =>{
+        setSelect([])
         setSearchText('')
         setCurrentPage(1)
         dispatch(getSalesOrders({ firstPageIndex:0, pageSize, searchText:'' }))
@@ -82,18 +85,24 @@ const SalesOrderList = () => {
             <div className='flex-row'>
                 <BackButton url='/'/>
                 <h1>Load Sales Orders (from Seradex)</h1>
-                <button className='btn btn-back' onClick={loadOrders}>
-                    <FaDownload />Load
-                </button>
+                <div style={{width:'150px'}}></div>
             </div>
 
-            <div style={{marginBottom:"10px"}}>
-                <input 
-                    value={searchText}
-                    onChange={(e) => setSearchText(e.target.value)}
-                    placeholder='Sales Order Number'></input>
-                <button onClick={()=>search()} style={{marginLeft:"10px",width:"80px"}}>Search</button>
-                <button onClick={()=>clearSearch()} style={{marginLeft:"10px",width:"80px"}}>Clear</button>
+            <div className='flex-row'>
+                <div style={{marginBottom:"10px"}}>
+                    <input 
+                        value={searchText}
+                        onChange={(e) => setSearchText(e.target.value)}
+                        placeholder='Sales Order Number'></input>
+                    <button onClick={()=>search()} style={{marginLeft:"10px",width:"80px"}}>Search</button>
+                    <button onClick={()=>clearSearch()} style={{marginLeft:"10px",width:"80px"}}>Clear</button>
+                </div>
+                <div>
+                    <div
+                        className={select.length>0?styles.buttonBlue:styles.buttonGrey}
+                        onClick={select.length>0?()=>{loadOrders()}:undefined}
+                    ><FaDownload /> Load</div>
+                </div>
             </div>
 
             <div>
@@ -106,7 +115,6 @@ const SalesOrderList = () => {
                     <div>Ship Address</div>
                     <div>Status</div>
                 </div>
-                <br />
                 {salesOrders.map((salesOrder,index) =>(
                     <SalesOrderItem key={salesOrder.ID} index={index} salesOrder={salesOrder} select={select} setSelect={setSelect} currentPage={currentPage} searchText={searchText}/>
                 ))}

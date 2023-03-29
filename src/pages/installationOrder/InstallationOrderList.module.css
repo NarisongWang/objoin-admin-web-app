@@ -11,3 +11,32 @@
     text-align: center;
     font-weight: 700;
 }
+
+.flexRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.buttonSearch {
+    margin-left:10px;
+    width:80px
+}
+
+.buttonGrey {
+    padding: 5px 10px 5px 10px;
+    width:auto;
+    color: gray;
+}
+
+.buttonBlue {
+    padding: 5px 10px 5px 10px;
+    width:auto;
+    color: blue;
+    cursor: pointer;
+}
+
+.buttonBlue:hover {
+    background-color: #f4f4f4;
+}

@@ -27,7 +27,7 @@ function Header() {
                 <div className='flex-row'>
                 {user?(
                     <>
-                        Hi { user.name }, 
+                        Hi { user.name }, &nbsp;
                         <li>
                             <button className='btn' onClick={onLogout}> <FaSignOutAlt /> Logout</button>
                         </li>

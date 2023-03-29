@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { getInstallationOrder, closeInstallationOrder, deleteInstallationOrder } from '../../features/installationOrder/installationOrderSlice'
+import { getInstallationOrder } from '../../features/installationOrder/installationOrderSlice'
 import { parseDate } from '../../utils/utils'
 import BackButton from '../../components/BackButton'
 import Spinner from '../../components/Spinner'
@@ -18,7 +18,6 @@ const InstallationOrderDetail = () => {
         (state) => state.auth
     )
 
-    const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const workStatus = installationOrder.workStatus||installationOrder.workStatus===0?dictionary.workStatus[installationOrder.workStatus].statusDesc:''
@@ -33,26 +32,6 @@ const InstallationOrderDetail = () => {
             toast.error(error)
         }
     },[error])
-
-    const closeOrder = () => {
-        if (window.confirm("Are you sure you want to close this order?")) {
-            dispatch(closeInstallationOrder({installationOrderId}))
-            .unwrap().then(()=>{
-                navigate(`/installation-orders/${paramPage}/${paramText?paramText:''}`)
-                toast.success('Installation Order Closed!')
-            }).catch(toast.error)
-        } else {}
-    }
-
-    const deleteOrder = () =>{
-        if (window.confirm("Are you sure you want to delete this order?")) {
-            dispatch(deleteInstallationOrder({installationOrderId}))
-            .unwrap().then(()=>{
-                navigate(`/installation-orders/${paramPage}/${paramText?paramText:''}`)
-                toast.success('Installation Order Deleted!')
-            }).catch(toast.error)
-        } else {}
-    }
 
     if(isLoading){
         return <Spinner />
@@ -123,19 +102,6 @@ const InstallationOrderDetail = () => {
                         return <li key={index}><a href={"/display-photo/"+photo.replaceAll('/','-')} className="link" target="_blank" rel="noreferrer">{photo}</a></li>
                     }):""}
                 </div>
-                <div>&nbsp;</div>
-                {(installationOrder.workStatus === 1||installationOrder.workStatus === 2||installationOrder.workStatus === 3) && (
-                    <Link to={`/installation-order-edit/${installationOrder._id}/edit/${paramPage}/${paramText?paramText:''}`} className='btn btn-block'> Edit Installation Order</Link>
-                )}
-                {(installationOrder.workStatus === 0||installationOrder.workStatus ===1) &&(
-                    <button onClick={()=>{deleteOrder()}} className='btn btn-block btn-danger'> Delete Installation Order</button>
-                )}
-                {(installationOrder.workStatus === 4||installationOrder.workStatus === 5) &&(
-                    <Link to={`/installation-order-report/${installationOrder._id}`} className='btn btn-block' target="_blank" rel="noreferrer"> Open Installation Report</Link>
-                )}
-                {(installationOrder.workStatus === 4 && installationOrder.workStatus !== 5) && (
-                    <button onClick={()=>{closeOrder()}} className='btn btn-block btn-danger'> Close Installation Order</button>
-                )}
             </section>
         </div>
     )

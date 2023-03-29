@@ -83,7 +83,7 @@ const InstallationOrderSetup = () => {
                 navigate(`/installation-orders/${paramPage}/${paramText?paramText:''}`)
                 toast.success('Installation Order Setup Success!')
             }).catch(toast.error)
-        } else {
+        } else if (paramType === 'edit') {
             dispatch(editInstallationOrder({
                 installationOrderId,
                 update:{
@@ -181,8 +181,7 @@ const InstallationOrderSetup = () => {
 
     return (
         <>
-            {paramType === 'setup'?<BackButton url={`/installation-orders/${paramPage}/${paramText?paramText:''}`}></BackButton>:
-                                   <BackButton url={`/installation-order/${installationOrderId}/${paramPage}/${paramText?paramText:''}`}></BackButton>}
+            {<BackButton url={`/installation-orders/${paramPage}/${paramText?paramText:''}`}></BackButton>}
             <section className={styles.heading}>
                 <h5>{paramType === 'setup'?'Setup':'Edit'} Installation Order</h5>
             </section>
@@ -255,7 +254,7 @@ const InstallationOrderSetup = () => {
                         <label htmlFor='users'>Staff List &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
                         <select ref={selectRef4} size="5">
                         {users.map((user,i) =>(
-                            user.isActive&&user.userType===1? (
+                            user.isActive&&user.userType===0? (
                                 <option key={i} value={user._id}> {user.fullName} </option>)
                                 :null
                         ))}
@@ -281,7 +280,7 @@ const InstallationOrderSetup = () => {
                         <label htmlFor='users'>Staff List &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
                         <select ref={selectRef2} size="5">
                         {users.map((user,i) =>(
-                            user.isActive&&user.userType===2? (
+                            user.isActive&&user.userType===1? (
                                 <option key={i} value={user._id}> {user.fullName} </option>)
                                 :null
                         ))}

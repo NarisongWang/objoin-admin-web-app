@@ -10,4 +10,21 @@
     border-radius: 5px;
     text-align: center;
     font-weight: 700;
-  }
+}
+
+.buttonGrey {
+  padding: 5px 10px 5px 10px;
+  width:auto;
+  color: gray;
+}
+
+.buttonBlue {
+  padding: 5px 10px 5px 10px;
+  width:auto;
+  color: blue;
+  cursor: pointer;
+}
+
+.buttonBlue:hover {
+  background-color: #f4f4f4;
+}

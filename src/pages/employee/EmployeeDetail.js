@@ -54,8 +54,8 @@ const EmployeeDetail = () => {
   }
 
   return (
-    <div className={styles.employeeDetail}>
-      <h2>
+    <div className={styles.detail}>
+      <h2 className='flex-row'>
           <BackButton url={`/employees/${paramPage}/${paramText?paramText:''}`}></BackButton>
           Staff Details 
           {employee.status===undefined?(<span className={styles.notLoaded}>Not activated</span>):

@@ -1,0 +1,54 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-family: inherit;
+}
+
+.container:hover {
+    border: 1px solid black;
+}
+
+.input {
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: 15px;
+}
+
+.buttons2 {
+    width: 150px;
+}
+
+.link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.update {
+    color: green;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.cancel {
+    color: black;
+    cursor: pointer;
+}
+
+.index {
+    width: 15px;
+}
