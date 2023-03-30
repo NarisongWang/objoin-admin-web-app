@@ -7,7 +7,8 @@ import EmployeeItem from '../../components/EmployeeItem'
 import Pagination from '../../components/Pagination'
 import BackButton from '../../components/BackButton'
 import Spinner from '../../components/Spinner'
-import { FaUserPlus,
+import { FaUserLock,
+        FaUserPlus,
         FaUserTimes,
         FaEnvelope } from 'react-icons/fa'
 import styles from './EmployeeList.module.css'
@@ -107,6 +108,9 @@ const EmployeeList = () => {
                     <button onClick={()=>clearSearch()} style={{marginLeft:"10px",width:"80px"}}>Clear</button>
                 </div>
                 <div className='flex-row'>
+                    <div 
+                        className={styles.buttonGrey}
+                    ><FaUserLock/> Activate as Admin</div>
                     <div 
                         className={select&&select.status===undefined?styles.buttonBlue:styles.buttonGrey}
                         onClick={select?()=>{navigate(`/employee/${select.EmployeeID}/${currentPage}/${searchText}`)}:undefined}

@@ -50,12 +50,14 @@
     width: 80px;
     display: flex;
     flex-direction: column;
+    text-align: center;
     justify-content:flex-end;
 }
 
 .timeInfoBottom{
     font-size: 12px;
     width: 80px;
+    text-align: center;
 }
 
 .infoRight{

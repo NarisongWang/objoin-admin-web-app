@@ -15,6 +15,16 @@ export const parseDate = (strDate) =>{
     return date.toString()
 }
 
+export const parseTime = (strDate) =>{
+    var strSplitDate = String(strDate).split(' ')
+    var time = new Date(strSplitDate[0])
+    var hh = time.getHours()
+    var mm = time.getMinutes()
+
+    time =  `${hh}:${mm>9?mm:'0'+mm}`
+    return time.toString()
+}
+
 export const getConfig = (token) =>{
     const config = {
         headers:{

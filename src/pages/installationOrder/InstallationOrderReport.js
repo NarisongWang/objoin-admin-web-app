@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { getInstallationOrder } from '../../features/installationOrder/installationOrderSlice'
-import { parseDate } from '../../utils/utils'
+import { parseDate, parseTime } from '../../utils/utils'
 import Spinner from '../../components/Spinner'
 import CheckListItem from '../../components/CheckListItem'
 import styles from './InstallationOrderReport.module.css'
@@ -53,11 +53,11 @@ const InstallationOrderReport = () => {
             
             <div className={styles.info}>Time Frames: </div>
             <div className={styles.timeFrame}>{installationOrder.timeFrames?installationOrder.timeFrames.map((timeFrame,index)=>{
-                return <div className={styles.timeInfoTop} key={index}>{index%2===1?dictionary.workStatus[timeFrame.workStatus].statusDesc:parseDate(timeFrame.time)}</div>
+                return <div className={styles.timeInfoTop} key={index}>{index%2===1?dictionary.workStatus[timeFrame.workStatus].statusDesc:parseDate(timeFrame.time)+' '+parseTime(timeFrame.time)}</div>
             }):''}</div>
             <img className={styles.line} alt='' src={require('../../assets/line.png')}></img>
             <div className={styles.timeFrame}>{installationOrder.timeFrames?installationOrder.timeFrames.map((timeFrame,index)=>{
-                return <div className={styles.timeInfoBottom} key={index}>{index%2!==1?dictionary.workStatus[timeFrame.workStatus].statusDesc:parseDate(timeFrame.time)}</div>
+                return <div className={styles.timeInfoBottom} key={index}>{index%2!==1?dictionary.workStatus[timeFrame.workStatus].statusDesc:parseDate(timeFrame.time)+' '+parseTime(timeFrame.time)}</div>
             }):''}</div>
             <div className={styles.info}> </div>
             <div className={styles.pagebreak}></div>

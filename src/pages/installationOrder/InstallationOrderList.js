@@ -89,6 +89,7 @@ const InstallationOrderList = () => {
         if (window.confirm("Are you sure you want to close this order?")) {
             dispatch(closeInstallationOrder({installationOrderId:select._id}))
             .unwrap().then(()=>{
+                setSelect(null)
                 const firstPageIndex = (currentPage - 1) * pageSize
                 dispatch(getInstallationOrders({ firstPageIndex, pageSize, searchText }))
                 toast.success('Installation Order Closed!')
@@ -100,6 +101,7 @@ const InstallationOrderList = () => {
         if (window.confirm("Are you sure you want to delete this order?")) {
             dispatch(deleteInstallationOrder({installationOrderId:select._id}))
             .unwrap().then(()=>{
+                setSelect(null)
                 const firstPageIndex = (currentPage - 1) * pageSize
                 dispatch(getInstallationOrders({ firstPageIndex, pageSize, searchText }))
                 toast.success('Installation Order Deleted!')

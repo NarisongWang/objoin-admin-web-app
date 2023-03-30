@@ -101,7 +101,7 @@ const SalesOrderList = () => {
                     <div
                         className={select.length>0?styles.buttonBlue:styles.buttonGrey}
                         onClick={select.length>0?()=>{loadOrders()}:undefined}
-                    ><FaDownload /> Load</div>
+                    ><FaDownload /> Load Sales Orders</div>
                 </div>
             </div>
 

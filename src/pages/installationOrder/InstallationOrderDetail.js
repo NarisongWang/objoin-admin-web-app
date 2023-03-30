@@ -42,9 +42,9 @@ const InstallationOrderDetail = () => {
             <h2>
                 <BackButton url={`/installation-orders/${paramPage}/${paramText?paramText:''}`}></BackButton>
                 Installation Order Details 
-                <span className={`status status-${installationOrder.workStatus}`}>
+                <div className={`status status-${installationOrder.workStatus}`}>
                     {workStatus}
-                </span>
+                </div>
             </h2>
             <section className='form'>
                 <div className='form-group'>
