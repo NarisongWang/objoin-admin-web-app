@@ -95,7 +95,6 @@ const InstallationOrderReport = () => {
                 {installationOrder.checkList?installationOrder.checkList.map((checkItem,index)=>{
                     return <CheckListItem key={index} title={checkItem.title} status={checkItem.status} note={checkItem.note}/>
                 }):''}
-                {installationOrder.checkListSignature?installationOrder.checkListSignature.signed?<img src={'https://objoinfiles.blob.core.windows.net/installation-orders/'+installationOrder.checkListSignature.signature+'?'+process.env.REACT_APP_AZURE_STORAGE_CONN} alt='' width='240' height='100' />:null:null}
             </div>
             <div className={styles.pagebreak}></div>
             <div className={styles.info}>Delivery Photos:</div>
