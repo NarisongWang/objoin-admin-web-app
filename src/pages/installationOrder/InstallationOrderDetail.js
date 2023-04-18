@@ -95,10 +95,10 @@ const InstallationOrderDetail = () => {
                 </div>
                 <div className='form-group'>
                     <label htmlFor='photos'>Photos <span style={{color:'blue', fontWeight:'bold'}}>Uploaded to Cloud</span></label>
-                    {installationOrder.photos1?installationOrder.photos1.map((photo,index)=>{
+                    {installationOrder.photos0?installationOrder.photos0.map((photo,index)=>{
                         return <li key={index}><a href={"/display-photo/"+photo.replaceAll('/','-')} className="link" target="_blank" rel="noreferrer">{photo}</a></li>
                     }):""}
-                    {installationOrder.photos2?installationOrder.photos2.map((photo,index)=>{
+                    {installationOrder.photos1?installationOrder.photos1.map((photo,index)=>{
                         return <li key={index}><a href={"/display-photo/"+photo.replaceAll('/','-')} className="link" target="_blank" rel="noreferrer">{photo}</a></li>
                     }):""}
                 </div>

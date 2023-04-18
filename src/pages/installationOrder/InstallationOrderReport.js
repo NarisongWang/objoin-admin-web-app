@@ -99,7 +99,7 @@ const InstallationOrderReport = () => {
             </div>
             <div className={styles.pagebreak}></div>
             <div className={styles.info}>Delivery Photos:</div>
-            {installationOrder.photos1? installationOrder.photos1.map((photo,index)=>{
+            {installationOrder.photos0? installationOrder.photos0.map((photo,index)=>{
                 return (
                     <div key={index} className={styles.responsive}>
                         <div className={styles.gallery}>
@@ -117,7 +117,7 @@ const InstallationOrderReport = () => {
             <div className={styles.pagebreak}></div>
 
             <div className={styles.info}>Installation Photos:</div> 
-            {installationOrder.photos2? installationOrder.photos2.map((photo,index)=>{
+            {installationOrder.photos1? installationOrder.photos1.map((photo,index)=>{
                 return (
                     <div key={index} className={styles.responsive}>
                         <div className={styles.gallery}>
